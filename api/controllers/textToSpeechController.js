@@ -11,6 +11,8 @@ exports.convert = function (req, res) {
 
     let text = req.body;
 
+    console.log(text)
+
     async function quickStart() {
 
         // The text to synthesize
