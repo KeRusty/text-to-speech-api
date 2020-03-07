@@ -17,7 +17,7 @@ app.use(bodyParser.json());
 //routes(app); //register the route
 
 app.post('/ttsConvert', (req, res) => {
-    const text = req.body;
+    const data = req.body;
 
     const client = new textToSpeech.TextToSpeechClient();
     // output the book to the console for debugging
@@ -28,9 +28,9 @@ app.post('/ttsConvert', (req, res) => {
 
         // Construct the request
         const request = {
-            input: { text: text },
+            input: { text: data.text },
             // Select the language and SSML voice gender (optional)
-            voice: { languageCode: 'en-US', ssmlGender: 'NEUTRAL' },
+            voice: { languageCode: data.language, ssmlGender: data.gender },
             // select the type of audio encoding
             audioConfig: { audioEncoding: 'MP3' },
         };
