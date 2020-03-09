@@ -20,9 +20,11 @@ app.use(bodyParser.json());
 app.post('/ttsConvert', (req, res) => {
     const data = req.body;
 
+
+
     const client = new textToSpeech.TextToSpeechClient();
     // output the book to the console for debugging
-    async function textToSpeech() {
+    async function textToSpeechConverter() {
 
         // The text to synthesize
         // const text = 'hello, world!';
@@ -46,7 +48,7 @@ app.post('/ttsConvert', (req, res) => {
 
         //console.log('Audio content written to file: output.mp3');
     }
-    textToSpeech();
+    textToSpeechConverter();
 
     res.send('Audio content written to file on your Server Folder: output.mp3');
 });
