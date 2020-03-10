@@ -1,5 +1,6 @@
 const express = require('express')
 const bodyParser = require('body-parser');
+const fileUpload = require('express-fileupload');
 const textToSpeech = require('@google-cloud/text-to-speech');
 const speech = require('@google-cloud/speech');
 const fs = require('fs');
@@ -13,6 +14,7 @@ app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+app.use(fileUpload());
 
 //let routes = require('./api/routes/textToSpeechRoutes'); //importing route
 //routes(app); //register the route
@@ -44,37 +46,38 @@ app.post('/ttsConvert', (req, res) => {
         // Write the binary audio content to a local file
         const writeFile = util.promisify(fs.writeFile);
 
-        await writeFile('output.mp3', response.audioContent, 'binary');
+        await writeFile("output.mp3", response.audioContent, 'binary');
 
         //console.log('Audio content written to file: output.mp3');
     }
     textToSpeechConverter();
-
+    // res.download();
     res.send('Audio content written to file on your Server Folder: output.mp3');
 });
 
 app.post('/SpeechConvert', (req, res) => {
-    const data = req.body;
+    // const file = req.files.file;
 
-    console.log(data)
+    console.log(req.files.file);
 
     const client = new speech.SpeechClient();
 
     async function speechToText() {
 
         // The name of the audio file to transcribe
-        const fileName = data;
+        const fileData = req.files.file.data;
 
         // Reads a local audio file and converts it to base64
-        const file = fs.readFileSync(fileName);
-        const audioBytes = file.toString('base64');
+        // const file = fs.readFileSync(fileData);
+        const audioBytes = fileData.toString('base64');
 
+        console.log(audioBytes);
         // The audio file's encoding, sample rate in hertz, and BCP-47 language code
         const audio = {
             content: audioBytes,
         };
         const config = {
-            encoding: 'LINEAR16',
+            encoding: 'MP3',
             sampleRateHertz: 16000,
             languageCode: 'en-US',
         };
@@ -85,8 +88,10 @@ app.post('/SpeechConvert', (req, res) => {
 
         // Detects speech in the audio file
         const [response] = await client.recognize(request);
+        console.log(response);
         const transcription = response.results
             .map(result => result.alternatives[0].transcript)
+            // .map(result => result)
             .join('\n');
         console.log(`Transcription: ${transcription}`);
     }
