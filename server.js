@@ -12,7 +12,7 @@ const port = 3000
 
 app.use(cors());
 
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 app.use(fileUpload());
 
@@ -33,11 +33,11 @@ app.post('/ttsConvert', (req, res) => {
 
         // Construct the request
         const request = {
-            input: {text: data.text},
+            input: { text: data.text, ssml: undefined },
             // Select the language and SSML voice gender (optional)
-            voice: {languageCode: data.language, ssmlGender: data.gender},
+            voice: { languageCode: data.language, ssmlGender: data.gender },
             // select the type of audio encoding
-            audioConfig: {audioEncoding: 'MP3'},
+            audioConfig: { audioEncoding: data.audio, speakingRate: data.speed },
         };
 
         // Performs the text-to-speech request
