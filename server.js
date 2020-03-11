@@ -22,22 +22,18 @@ app.use(fileUpload());
 app.post('/ttsConvert', (req, res) => {
     const data = req.body;
 
-
     const client = new textToSpeech.TextToSpeechClient();
 
     // output the book to the console for debugging
     async function textToSpeechConverter() {
 
-        // The text to synthesize
-        // const text = 'hello, world!';
-
         // Construct the request
         const request = {
-            input: { text: data.text, ssml: undefined },
+            input: { ssml: data.ssml },
             // Select the language and SSML voice gender (optional)
             voice: { languageCode: data.language, ssmlGender: data.gender },
             // select the type of audio encoding
-            audioConfig: { audioEncoding: data.audio, speakingRate: data.speed },
+            audioConfig: { audioEncoding: data.audio, speakingRate: data.speed, pitch: data.pitch },
         };
 
         // Performs the text-to-speech request
@@ -48,7 +44,6 @@ app.post('/ttsConvert', (req, res) => {
 
         await writeFile("output.mp3", response.audioContent, 'binary');
 
-        //console.log('Audio content written to file: output.mp3');
     }
 
     textToSpeechConverter();
