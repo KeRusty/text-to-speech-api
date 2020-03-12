@@ -31,7 +31,8 @@ app.post('/ttsConvert', (req, res) => {
         const request = {
             input: { ssml: data.ssml },
             // Select the language and SSML voice gender (optional)
-            voice: { languageCode: data.language, ssmlGender: data.gender },
+            //voice: { languageCode: data.language, ssmlGender: data.gender },
+            voice: { languageCode: data.locale.split('-').slice(0, 2).join('-'), name: data.locale },
             // select the type of audio encoding
             audioConfig: { audioEncoding: data.audio, speakingRate: data.speed, pitch: data.pitch },
         };
@@ -47,7 +48,6 @@ app.post('/ttsConvert', (req, res) => {
     }
 
     textToSpeechConverter();
-    // res.download();
     res.send('Audio content written to file on your Server Folder: output.mp3');
 });
 
