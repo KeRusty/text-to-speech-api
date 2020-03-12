@@ -43,7 +43,7 @@ app.post('/ttsConvert', (req, res) => {
         // Write the binary audio content to a local file
         const writeFile = util.promisify(fs.writeFile);
 
-        await writeFile("output.mp3", response.audioContent, 'binary');
+        await writeFile(`${data.fileName}.mp3`, response.audioContent, 'binary');
 
     }
 
