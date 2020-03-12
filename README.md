@@ -9,11 +9,11 @@
 
     Set the `GOOGLE_APPLICATION_CREDENTIALS` environment variable:
 
-    Linux:
+    Mac OSX or Linux:
 
-        export GOOGLE_APPLICATION_CREDENTIALS=/path/to/service_account_file.json
+        export GOOGLE_APPLICATION_CREDENTIALS="/home/user/Downloads/[FILE_NAME].json"
 
-    Windows:
+    Windows (Command Prompt):
 
         set GOOGLE_APPLICATION_CREDENTIALS=/path/to/service_account_file.json
 
@@ -31,7 +31,8 @@ This will install the app<br />
 
 Runs the app in the development mode.<br />
 
-It will run at [http://localhost:3001](http://localhost:3001)
+It will run at [http://localhost:3000](http://localhost:3000)
+
 <br />
 
 
