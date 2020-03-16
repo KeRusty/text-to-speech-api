@@ -8,7 +8,7 @@ const util = require('util');
 const cors = require('cors');
 
 const app = express()
-const port = 3000
+const port = 3002
 
 app.use(cors());
 
@@ -48,7 +48,9 @@ app.post('/ttsConvert', (req, res) => {
     }
 
     textToSpeechConverter();
+
     res.send('Audio content written to file on your Server Folder: output.mp3');
+
 });
 
 app.post('/SpeechConvert', (req, res) => {
